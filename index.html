@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #1a2980, #26d0ce);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #converter {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+        }
+
+        h2 {
+            color: #26d0ce;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #1a2980;
+        }
+        input{
+            margin: 10px;
+            padding: 15px;
+            font-size: 16px;
+            width: 320px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+        select, button {
+            margin: 10px;
+            padding: 15px;
+            font-size: 16px;
+            width: calc(100% - 20px);
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        select {
+            color: #1a2980;
+        }
+
+        button {
+            background-color: #1a2980;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #26d0ce;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #1a2980;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div id="converter">
+        <h2>Temperature Converter</h2>
+        <h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:rgb(54, 107, 205); text-align:justify">Here is a basic HTML, CSS, and JavaScript example of a temperature converter website. This example shows how to convert between Kelvin, Celsius, and Fahrenheit. Additionally, it includes simple input validation.</h3>
+        <label for="temperature">Temperature:</label>
+        <input type="text" id="temperature" placeholder="Enter temperature" required>
+        
+        <label for="unit">Choose unit:</label>
+        <select id="unit">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+
+        <button onclick="convertTemperature()">Convert</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            const temperatureInput = document.getElementById('temperature').value;
+            const unit = document.getElementById('unit').value;
+            const resultElement = document.getElementById('result');
+
+            // Check if the input is a valid number
+            if (isNaN(temperatureInput)) {
+                resultElement.innerHTML = 'Please enter a valid number.';
+                return;
+            }
+
+            const temperature = parseFloat(temperatureInput);
+
+            // Perform the conversion
+            let convertedTemperature;
+            switch (unit) {
+                case 'celsius':
+                    convertedTemperature = {
+                        fahrenheit: (temperature * 9/5) + 32,
+                        kelvin: temperature + 273.15
+                    };
+                    break;
+                case 'fahrenheit':
+                    convertedTemperature = {
+                        celsius: (temperature - 32) * 5/9,
+                        kelvin: (temperature - 32) * 5/9 + 273.15
+                    };
+                    break;
+                case 'kelvin':
+                    convertedTemperature = {
+                        celsius: temperature - 273.15,
+                        fahrenheit: (temperature - 273.15) * 9/5 + 32
+                    };
+                    break;
+                default:
+                    resultElement.innerHTML = 'Invalid unit.';
+                    return;
+            }
+
+            // Display the result
+            resultElement.innerHTML = `
+                ${temperature.toFixed(2)} ${unit} is equal to:
+                ${convertedTemperature.celsius ? convertedTemperature.celsius.toFixed(2) + ' Celsius, ' : ''}
+                ${convertedTemperature.fahrenheit ? convertedTemperature.fahrenheit.toFixed(2) + ' Fahrenheit, ' : ''}
+                ${convertedTemperature.kelvin ? convertedTemperature.kelvin.toFixed(2) + ' Kelvin.' : ''}
+            `;
+        }
+    </script>
+    
+</body>
+</html>
